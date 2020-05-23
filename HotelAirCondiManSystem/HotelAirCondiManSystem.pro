@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui
+QT       += sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -31,7 +32,9 @@ SOURCES += \
     receptionist.cpp \
     manager.cpp \
     admin.cpp \
-    login.cpp
+    login.cpp \
+    databasestatus.cpp \
+    databasereport.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -39,7 +42,9 @@ HEADERS += \
     receptionist.h \
     manager.h \
     admin.h \
-    login.h
+    login.h \
+    databasestatus.h \
+    databasereport.h
 
 FORMS += \
     mainwindow.ui \
