@@ -67,7 +67,13 @@
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="label_customer_name_4">
+          <widget class="QLabel" name="label_roomID">
+           <property name="minimumSize">
+            <size>
+             <width>50</width>
+             <height>0</height>
+            </size>
+           </property>
            <property name="text">
             <string/>
            </property>
@@ -84,7 +90,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>448</width>
+         <width>420</width>
          <height>20</height>
         </size>
        </property>
@@ -123,7 +129,7 @@
      <rect>
       <x>80</x>
       <y>280</y>
-      <width>401</width>
+      <width>418</width>
       <height>25</height>
      </rect>
     </property>
@@ -268,6 +274,32 @@
         </size>
        </property>
       </spacer>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="layoutWidget_5">
+    <property name="geometry">
+     <rect>
+      <x>260</x>
+      <y>210</y>
+      <width>151</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_21">
+     <item>
+      <widget class="QLabel" name="label_ACState_tag_3">
+       <property name="text">
+        <string>当前空调状态</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_ACstate_3">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
      </item>
     </layout>
    </widget>

@@ -1,0 +1,17 @@
+debug/main.o
+debug/mainwindow.o
+debug/client.o
+debug/receptionist.o
+debug/manager.o
+debug/admin.o
+debug/login.o
+debug/databasestatus.o
+debug/databasereport.o
+debug/clientcontroller.o
+debug/moc_mainwindow.o
+debug/moc_client.o
+debug/moc_receptionist.o
+debug/moc_manager.o
+debug/moc_admin.o
+debug/moc_login.o
+debug/moc_clientcontroller.o

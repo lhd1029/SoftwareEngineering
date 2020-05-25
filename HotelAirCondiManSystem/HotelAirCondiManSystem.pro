@@ -34,7 +34,8 @@ SOURCES += \
     admin.cpp \
     login.cpp \
     databasestatus.cpp \
-    databasereport.cpp
+    databasereport.cpp \
+    clientcontroller.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -44,7 +45,8 @@ HEADERS += \
     admin.h \
     login.h \
     databasestatus.h \
-    databasereport.h
+    databasereport.h \
+    clientcontroller.h
 
 FORMS += \
     mainwindow.ui \
