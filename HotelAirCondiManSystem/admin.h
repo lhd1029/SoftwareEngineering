@@ -1,6 +1,6 @@
-#ifndef ADMIN_H
+﻿#ifndef ADMIN_H
 #define ADMIN_H
-
+#include <admincontroller.h>
 #include <QMainWindow>
 
 namespace Ui {
@@ -17,6 +17,13 @@ public:
 
 private:
     Ui::Admin *ui;
+    AdminController adminController;
+    void initConnect();
+    void initACPara();
+private slots:
+    void checkState();
+    void changeAirconState();
+    void shutDown();
 };
 
 #endif // ADMIN_H
