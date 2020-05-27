@@ -11,9 +11,9 @@ private:
     int port;
     QHostAddress *serverIP;
 public:
-    void virtual dataSend(QString msg);
+    virtual void dataSend(QString msg);
 public slots:
-    void virtual dataReceived();//根据具体情况进行重写
+    virtual void dataReceived();//根据具体情况进行重写
 public:
     explicit TcpClient();
     virtual ~TcpClient();
