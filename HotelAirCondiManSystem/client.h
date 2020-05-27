@@ -33,19 +33,19 @@ public:
 
 
 private slots:
-    /*升温*/
+    /* 升温 */
     void on_pushButton_temperature_up_2_clicked();
-    /*降温*/
+    /* 降温 */
     void on_pushButton_temperature_down_2_clicked();
-    /*开关按钮*/
+    /* 开关按钮 */
     void on_pushButton_switch_2_clicked();
-    /*增加风速*/
+    /* 增加风速 */
     void on_pushButton_speed_up_2_clicked();
-    /*减小风速*/
+    /* 减小风速 */
     void on_pushButton_speed_down_2_clicked();
-    /*定时器*/
+    /* 定时器 */
     void onTimerOut();
-    /*基于优先级和时间片调度结果返回*/
+    /* 基于优先级和时间片调度结果返回 */
     void onWindUpdated();
 
 private:
