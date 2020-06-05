@@ -38,7 +38,8 @@ SOURCES += \
     admincontroller.cpp \
     report.cpp \
     record.cpp \
-    clientcontroller.cpp
+    clientcontroller.cpp \
+    receptionist_controller.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -52,7 +53,8 @@ HEADERS += \
     admincontroller.h \
     report.h \
     record.h \
-    clientcontroller.h
+    clientcontroller.h \
+    receptionist_controller.h
 
 FORMS += \
     mainwindow.ui \
