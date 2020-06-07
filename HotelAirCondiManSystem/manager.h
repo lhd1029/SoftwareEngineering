@@ -1,9 +1,12 @@
 #ifndef MANAGER_H
 #define MANAGER_H
 #include "report.h"
+#include "globaldata.h"
+#include "managercontroller.h"
 #include <QDate>
 #include <QString>
 #include <QMainWindow>
+#include <QDebug>
 
 namespace Ui {
 class Manager;
@@ -15,19 +18,26 @@ class Manager : public QMainWindow
 
 public:
     explicit Manager(QWidget *parent = nullptr);
+    ManagerController managerController;
     ~Manager();
 
 private:
     Ui::Manager *ui;
-    Report *report;
+    //初始化UI界面
     void initUI();
+    //连接信号槽函数
     void initConnect();
-    void displayReport();
 
 private slots:
-    void clickCheckReport();//点击查看报表按钮
-    void clickDwonload();
-    void clickQuit();
+    //查看报表
+    void checkReport();
+    //下载报表————考虑实现
+    void dwonload();
+    //退出系统
+    void quit();
+
+signals:
+    void quitSignal();
 };
 
 #endif // MANAGER_H

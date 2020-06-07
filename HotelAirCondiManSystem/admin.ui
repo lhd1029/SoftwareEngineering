@@ -17,10 +17,10 @@
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>40</y>
-      <width>319</width>
-      <height>306</height>
+      <x>20</x>
+      <y>13</y>
+      <width>751</width>
+      <height>571</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -52,7 +52,7 @@
      <item>
       <layout class="QGridLayout" name="gridLayout">
        <item row="0" column="1">
-        <widget class="QComboBox" name="degreepattern">
+        <widget class="QComboBox" name="combobox_controlPattern">
          <item>
           <property name="text">
            <string>热</string>
@@ -65,53 +65,62 @@
          </item>
         </widget>
        </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>温控模式</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="2">
-        <widget class="QLabel" name="label_2">
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_separator">
          <property name="text">
           <string>温控范围</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="3">
-        <widget class="QComboBox" name="degreelimit">
-         <item>
-          <property name="text">
-           <string>26~30</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>18~26</string>
-          </property>
-         </item>
+       <item row="1" column="1">
+        <widget class="QSpinBox" name="spinBox_lowLimit"/>
+       </item>
+       <item row="1" column="3">
+        <widget class="QSpinBox" name="spinBox_highLimit"/>
+       </item>
+       <item row="1" column="2">
+        <widget class="QLabel" name="label_tempLimit">
+         <property name="text">
+          <string>~</string>
+         </property>
         </widget>
        </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_3">
+       <item row="0" column="2">
+        <widget class="QLabel" name="label_defaultTemp">
          <property name="text">
           <string>缺省温度</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="1">
-        <widget class="QSpinBox" name="defaultdegree"/>
+       <item row="0" column="3">
+        <widget class="QSpinBox" name="spinbox_defaultTemp"/>
        </item>
-       <item row="1" column="2">
-        <widget class="QLabel" name="label_4">
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_feeRate">
          <property name="text">
           <string>费率</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="3">
-        <widget class="QSpinBox" name="feerate"/>
+       <item row="2" column="1">
+        <widget class="QSpinBox" name="spinbox_feeRate"/>
+       </item>
+       <item row="2" column="2">
+        <widget class="QLabel" name="label_serveNum">
+         <property name="text">
+          <string>服务对象</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="3">
+        <widget class="QSpinBox" name="spinBox_serveNum"/>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_degreepattern">
+         <property name="text">
+          <string>温控模式</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>
@@ -130,14 +139,14 @@
       </layout>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_check_state">
+      <widget class="QPushButton" name="pushButton_checkState">
        <property name="text">
         <string>查看状态</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QTextBrowser" name="textBrowser"/>
+      <widget class="QTextBrowser" name="textBrowser_state"/>
      </item>
      <item>
       <widget class="QPushButton" name="pushButton_quit">
