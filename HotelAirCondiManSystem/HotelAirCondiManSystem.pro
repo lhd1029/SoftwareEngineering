@@ -33,7 +33,6 @@ SOURCES += \
     manager.cpp \
     admin.cpp \
     login.cpp \
-    databasestatus.cpp \
     admincontroller.cpp \
     report.cpp \
     record.cpp \
@@ -51,7 +50,6 @@ HEADERS += \
     manager.h \
     admin.h \
     login.h \
-    databasestatus.h \
     admincontroller.h \
     report.h \
     record.h \

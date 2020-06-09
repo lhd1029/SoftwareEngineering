@@ -4,9 +4,9 @@
 #include "manager.h"
 #include "receptionist.h"
 #include "login.h"
-#include "databasestatus.h"
 #include "data.h"
 #include "databasetimelyreport.h"
+#include "databasesteplyreport.h"
 #include <QApplication>
 
 

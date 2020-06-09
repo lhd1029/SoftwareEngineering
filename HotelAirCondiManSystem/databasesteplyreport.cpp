@@ -6,11 +6,14 @@ DatabaseSteplyReport::DatabaseSteplyReport()
 }
 bool DatabaseSteplyReport::connect()//连接数据库
 {
-    db = QSqlDatabase::addDatabase("QODBC");
+    if(QSqlDatabase::contains("qt_sql_default_connection"))
+        db = QSqlDatabase::database("qt_sql_default_connection");
+    else
+        db = QSqlDatabase::addDatabase("QODBC");
     db.setDatabaseName("DRIVER={SQL SERVER};SERVER=.;DATABASE=Airconditioner");
     return db.open();
 }
-void DatabaseSteplyReport::disconnect()//连接数据库
+void DatabaseSteplyReport::disconnect()//断开数据库
 {
     db.close();
 }
@@ -92,4 +95,38 @@ double DatabaseSteplyReport::check_cost(QString roomID)//查看空调某种状�
         return query.value(0).toDouble();
     else
         return -1;
+}
+
+QDateTime DatabaseSteplyReport::getCheckInTime(QString roomID)
+{
+    QDateTime ret;
+    QString sql = "select max(time) from airconditioner_steply_report "
+                  "where roomID = '" + roomID + "' and occupied = 1";
+    QSqlQuery query;
+    query.clear();
+    bool result = query.exec(sql);
+    if (result != 0)
+    {
+        query.next();
+        QString qtime = query.value(0).toString();
+        ret = QDateTime::fromString(qtime,"yyyyMMddhhmmss");
+    }
+    return ret;
+}
+
+QDateTime DatabaseSteplyReport::getCheckOutTime(QString roomID)
+{
+    QDateTime ret;
+    QString sql = "select max(time) from airconditioner_steply_report "
+                  "where roomID = '" + roomID + "' and occupied = 2";
+    QSqlQuery query;
+    query.clear();
+    bool result = query.exec(sql);
+    if (result != 0)
+    {
+        query.next();
+        QString qtime = query.value(0).toString();
+        ret = QDateTime::fromString(qtime,"yyyyMMddhhmmss");
+    }
+    return ret;
 }

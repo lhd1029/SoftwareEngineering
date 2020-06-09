@@ -8,7 +8,10 @@ DatabaseTimelyReport::DatabaseTimelyReport()
 }
 bool DatabaseTimelyReport::connect()//连接数据库
 {
-    db = QSqlDatabase::addDatabase("QODBC");
+    if(QSqlDatabase::contains("qt_sql_default_connection"))
+        db = QSqlDatabase::database("qt_sql_default_connection");
+    else
+        db = QSqlDatabase::addDatabase("QODBC");
     db.setDatabaseName("DRIVER={SQL SERVER};SERVER=.;DATABASE=Airconditioner");
     return db.open();
 }
@@ -42,9 +45,9 @@ and cur_speed = '" + QString::number(speed) + "'";
     int hour = total % 60;
     total = (int)((total-hour)/24);
     int day = total % 24;
-    QString time_high;
-    QTextStream(&time_high) << day << " "<< hour << ":" << minute << ":" << second;
-    ret = QDateTime::fromString(time_high,"dd hh:mm:ss");
+    QString time_;
+    QTextStream(&time_) << day << " "<< hour << ":" << minute << ":" << second;
+    ret = QDateTime::fromString(time_,"dd hh:mm:ss");
 //    cout << time_high.toStdString();
     return ret;
 }
@@ -62,29 +65,29 @@ where roomID = '" + QString::fromStdString("a1") + "')";
         bool result1 = query.exec(sql);
         double payment = 0.0;
         double rate = 1.0;//默认1元/度
-        if (result1)
-        {
-            query.next();
-            payment = query.value(0).toDouble();
-            rate = query.value(1).toDouble();
-            payment += 1/(60*(4-curspeed)) * rate;//3是高，2是中，1是低
-        }
-        sql = "insert into airconditioner_timely_report"
-              "values ('" + QString::fromStdString("a1") + "', "
-                + QString::number(time_) + ", "
-                + QString::number(is_open) + ", "
-                + QString::number(cur_temp) + ", "
-                + QString::number(cur_speed) + ", "
-                + QString::number(target_temp) + ", "
-                + QString::number(target_speed) + ", "
-                + QString::number(payment) + ")";
+//        if (result1)
+//        {
+//            query.next();
+//            payment = query.value(0).toDouble();
+//            rate = query.value(1).toDouble();
+//            payment += 1/(60*(4-curspeed)) * rate;//3是高，2是中，1是低
+//        }
+//        sql = "insert into airconditioner_timely_report"
+//              "values ('" + QString::fromStdString("a1") + "', "
+//                + QString::number(time_) + ", "
+//                + QString::number(is_open) + ", "
+//                + QString::number(cur_temp) + ", "
+//                + QString::number(cur_speed) + ", "
+//                + QString::number(target_temp) + ", "
+//                + QString::number(target_speed) + ", "
+//                + QString::number(payment) + ")";
         query.clear();
         bool result2 = query.exec(sql);
         return (result1 && result2);
     }
 
 }
-double get_rate(QString roomID)//获取空调适用费率
+double DatabaseTimelyReport::get_rate(QString roomID)//获取空调适用费率
 {
     QString sql = "select rate from airconditioner_timely_report\
 where roomID = '" + QString::fromStdString("a1") + " and time = \
@@ -103,12 +106,12 @@ where roomID = '" + QString::fromStdString("a1") + "')";
     }
 }
 
-double get_payment(QString roomID)//获取空调应付金额
+double DatabaseTimelyReport::get_payment(QString roomID)//获取空调应付金额
 {
     QString sql = "select payment from airconditioner_timely_report\
-where roomID = '" + QString::fromStdString("a1") + " and time = \
+where roomID = '" + roomID + " and time = \
 (select max(time) from airconditioner_timely_report\
-where roomID = '" + QString::fromStdString("a1") + "')";
+where roomID = '" + roomID + "')";
     QSqlQuery query;
     query.clear();
     bool result1 = query.exec(sql);
