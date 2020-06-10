@@ -128,7 +128,7 @@ where roomID = '" + roomID + "')";
 //获取房间使用空调时间
 double DatabaseTimelyReport::getACUseTime(QString roomID, QString date)
 {
-    QString sql = "select count(*) from airconditioner_status where roomID = '" + roomID
+    QString sql = "select count(*) from airconditioner_timely_report where roomID = '" + roomID
                 + "' and time like " + "'" + date + "% '" + "and status = " + QString::number(RUNNING);
     QSqlQuery query;
     if(!query.exec(sql))
@@ -138,13 +138,12 @@ double DatabaseTimelyReport::getACUseTime(QString roomID, QString date)
 
 int DatabaseTimelyReport::getACdispatchedTimes(QString roomID, QString date)
 {
-    QString sql = "select status, time from airconditioner_status where roomID = '" + roomID
+    QString sql = "select status, time from airconditioner_timely_report where roomID = '" + roomID
                 + "' and time like " + "'" + date + "% '" + "order by time asc";
     QSqlQuery query;
     if(!query.exec(sql))
         qDebug()<<"Query get patched times failed";
     int times=0, flag=0;
-    int currentStatus;
     while(query.next()){
         if(query.value(0).toInt() == RUNNING)
             if(!flag){//之前没被调度，现在处于正在运行，说明被调度

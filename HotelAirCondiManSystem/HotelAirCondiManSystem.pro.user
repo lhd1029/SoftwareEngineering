@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.8.1, 2020-06-09T23:49:41. -->
+<!-- Written by QtCreator 4.8.1, 2020-06-10T15:15:05. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
-  <value type="QByteArray">{c4346107-53f5-4ef5-98e8-960fb75572ba}</value>
+  <value type="QByteArray">{73009a7d-eeb4-4dda-9575-8797058febb9}</value>
  </data>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
@@ -45,7 +45,7 @@
    <value type="int" key="EditorConfiguration.TabKeyBehavior">0</value>
    <value type="int" key="EditorConfiguration.TabSize">8</value>
    <value type="bool" key="EditorConfiguration.UseGlobal">true</value>
-   <value type="int" key="EditorConfiguration.Utf8BomBehavior">1</value>
+   <value type="int" key="EditorConfiguration.Utf8BomBehavior">0</value>
    <value type="bool" key="EditorConfiguration.addFinalNewLine">true</value>
    <value type="bool" key="EditorConfiguration.cleanIndentation">true</value>
    <value type="bool" key="EditorConfiguration.cleanWhitespace">true</value>
@@ -71,7 +71,7 @@
    <value type="int" key="ProjectExplorer.Target.ActiveDeployConfiguration">0</value>
    <value type="int" key="ProjectExplorer.Target.ActiveRunConfiguration">0</value>
    <valuemap type="QVariantMap" key="ProjectExplorer.Target.BuildConfiguration.0">
-    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">D:/learning/coding/SE/build-HotelAirCondiManSystem-Desktop_Qt_5_12_1_MinGW_64_bit-Debug</value>
+    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">F:/Study/SoftwareEngineer/SoftwareEngineering/build-HotelAirCondiManSystem-Desktop_Qt_5_12_1_MinGW_64_bit-Debug</value>
     <valuemap type="QVariantMap" key="ProjectExplorer.BuildConfiguration.BuildStepList.0">
      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.0">
       <value type="bool" key="ProjectExplorer.BuildStep.Enabled">true</value>
@@ -127,7 +127,7 @@
     <value type="bool" key="Qt4ProjectManager.Qt4BuildConfiguration.UseShadowBuild">true</value>
    </valuemap>
    <valuemap type="QVariantMap" key="ProjectExplorer.Target.BuildConfiguration.1">
-    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">D:/learning/coding/SE/build-HotelAirCondiManSystem-Desktop_Qt_5_12_1_MinGW_64_bit-Release</value>
+    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">F:/Study/SoftwareEngineer/SoftwareEngineering/build-HotelAirCondiManSystem-Desktop_Qt_5_12_1_MinGW_64_bit-Release</value>
     <valuemap type="QVariantMap" key="ProjectExplorer.BuildConfiguration.BuildStepList.0">
      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.0">
       <value type="bool" key="ProjectExplorer.BuildStep.Enabled">true</value>
@@ -183,7 +183,7 @@
     <value type="bool" key="Qt4ProjectManager.Qt4BuildConfiguration.UseShadowBuild">true</value>
    </valuemap>
    <valuemap type="QVariantMap" key="ProjectExplorer.Target.BuildConfiguration.2">
-    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">D:/learning/coding/SE/build-HotelAirCondiManSystem-Desktop_Qt_5_12_1_MinGW_64_bit-Profile</value>
+    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">F:/Study/SoftwareEngineer/SoftwareEngineering/build-HotelAirCondiManSystem-Desktop_Qt_5_12_1_MinGW_64_bit-Profile</value>
     <valuemap type="QVariantMap" key="ProjectExplorer.BuildConfiguration.BuildStepList.0">
      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.0">
       <value type="bool" key="ProjectExplorer.BuildStep.Enabled">true</value>
@@ -297,7 +297,7 @@
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">HotelAirCondiManSystem</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:D:/learning/coding/SE/SE-lhd/SoftwareEngineering/HotelAirCondiManSystem/HotelAirCondiManSystem.pro</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:F:/Study/SoftwareEngineer/SoftwareEngineering/HotelAirCondiManSystem/HotelAirCondiManSystem.pro</value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.ProFile">HotelAirCondiManSystem.pro</value>
     <value type="QString" key="RunConfiguration.Arguments"></value>
     <value type="uint" key="RunConfiguration.QmlDebugServerPort">3768</value>
@@ -308,7 +308,7 @@
     <value type="bool" key="RunConfiguration.UseQmlDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
     <value type="QString" key="RunConfiguration.WorkingDirectory"></value>
-    <value type="QString" key="RunConfiguration.WorkingDirectory.default">D:/learning/coding/SE/build-HotelAirCondiManSystem-Desktop_Qt_5_12_1_MinGW_64_bit-Debug</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">F:/Study/SoftwareEngineer/SoftwareEngineering/build-HotelAirCondiManSystem-Desktop_Qt_5_12_1_MinGW_64_bit-Debug</value>
    </valuemap>
    <value type="int" key="ProjectExplorer.Target.RunConfigurationCount">1</value>
   </valuemap>
