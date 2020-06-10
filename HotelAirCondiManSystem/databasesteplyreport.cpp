@@ -1,4 +1,4 @@
-#include "databasesteplyreport.h"
+﻿#include "databasesteplyreport.h"
 
 DatabaseSteplyReport::DatabaseSteplyReport()
 {
@@ -129,4 +129,46 @@ QDateTime DatabaseSteplyReport::getCheckOutTime(QString roomID)
         ret = QDateTime::fromString(qtime,"yyyyMMddhhmmss");
     }
     return ret;
+}
+
+//空调调温度次数
+int DatabaseSteplyReport::getChangeTempTimes(QString roomID, QString date)
+{
+    QString sql = "select target_temp, time from airconditioner_timely_report where roomID = '" + roomID
+            + "' and time like " + "'" + date + "% '"+ "order by time asc";
+    QSqlQuery query;
+    if(!query.exec(sql))
+        qDebug()<<"Query change degree times failed";
+    int times=1;//开启空调时，算一次调节温度
+    double lastTemp = query.value(0).toDouble();
+    double currentTemp;
+    while(query.next()){
+        currentTemp = query.value(0).toDouble();
+        if(abs(currentTemp - lastTemp) > 0.01){
+            times++;//调节温度了
+            lastTemp = currentTemp;
+        }
+    }
+    return times;
+}
+
+//空调调风次数
+int DatabaseSteplyReport::getChangeWindTimes(QString roomID, QString date)
+{
+    QString sql = "select target_wind, time from airconditioner_timely_report where roomID = '" + roomID
+            + "' and time like " + "'" + date + "% '"+ "order by time asc";
+    QSqlQuery query;
+    if(!query.exec(sql))
+        qDebug()<<"Query change degree times failed";
+    int times=1;//开启空调时，第一次调节风速
+    int lastWind = query.value(0).toInt();
+    int currentWind;
+    while(query.next()){
+        currentWind = query.value(0).toInt();
+        if(currentWind != lastWind){
+            times++;//调节温度了
+            lastWind = currentWind;
+        }
+    }
+    return times;
 }

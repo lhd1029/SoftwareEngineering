@@ -1,4 +1,4 @@
-#ifndef DATABASESTEPLYREPORT_H
+﻿#ifndef DATABASESTEPLYREPORT_H
 #define DATABASESTEPLYREPORT_H
 
 #include <QSqlDatabase>
@@ -6,6 +6,7 @@
 #include <QVariant>
 #include <QString>
 #include <QTime>
+#include <QDebug>
 
 class DatabaseSteplyReport//空调报表数据库
 {
@@ -24,6 +25,8 @@ public:
     int check_target_speed(QString roomID);//查看空调风速
     double check_target_temperture(QString roomID);//查看空调温度
     double check_cost(QString roomID);//查看空调某种状态的花费
+    int getChangeTempTimes(QString roomID, QString date);//空调调温次数
+    int getChangeWindTimes(QString roomID, QString date);//空调调风次数
 
     QDateTime getCheckInTime(QString roomID);
     QDateTime getCheckOutTime(QString roomID);

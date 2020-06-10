@@ -1,4 +1,4 @@
-#ifndef DATABASETIMELYREPORT_H
+﻿#ifndef DATABASETIMELYREPORT_H
 #define DATABASETIMELYREPORT_H
 
 #include <QSqlDatabase>
@@ -6,6 +6,8 @@
 #include <QVariant>
 #include <QString>
 #include <QTime>
+#include <QDebug>
+#include "globaldata.h"
 
 class DatabaseTimelyReport
 {
@@ -19,6 +21,8 @@ public:
     double get_rate(QString roomID);//获取空调适用费率
     double get_payment(QString roomID);//获取空调应付金额
     bool update();
+    double getACUseTime(QString roomID, QString date);
+    int getACdispatchedTimes(QString roomID, QString date);
 };
 
 #endif // DATABASETIMELYREPORT_H

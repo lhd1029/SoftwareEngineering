@@ -1,8 +1,13 @@
-#ifndef GLOBALDATE_H
+﻿#ifndef GLOBALDATE_H
 #define GLOBALDATE_H
 
 #define roomNum 5
-//int room[roomNum] = {201,202,203,204,205};
+#define RUNNING 1 //空调正在运行
+#define WAITING 2 //空调等待被调度
+#define NOUSE 0 //空调开启但未操作
+#define POWERON 1 //空调开启
+#define POWEROFF 0 //空调关闭
+int room[roomNum] = {201,202,203,204,205};
 
 struct roomState{
     int roomId;

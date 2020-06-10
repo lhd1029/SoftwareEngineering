@@ -1,4 +1,4 @@
-#include "databasetimelyreport.h"
+﻿#include "databasetimelyreport.h"
 #include <iostream>
 #include <QTextStream>
 using namespace std;
@@ -123,4 +123,37 @@ where roomID = '" + roomID + "')";
     {
         return result1;
     }
+}
+
+//获取房间使用空调时间
+double DatabaseTimelyReport::getACUseTime(QString roomID, QString date)
+{
+    QString sql = "select count(*) from airconditioner_status where roomID = '" + roomID
+                + "' and time like " + "'" + date + "% '" + "and status = " + QString::number(RUNNING);
+    QSqlQuery query;
+    if(!query.exec(sql))
+        qDebug()<<"Query get AC use time failed";
+    return query.value(0).toDouble();
+}
+
+int DatabaseTimelyReport::getACdispatchedTimes(QString roomID, QString date)
+{
+    QString sql = "select status, time from airconditioner_status where roomID = '" + roomID
+                + "' and time like " + "'" + date + "% '" + "order by time asc";
+    QSqlQuery query;
+    if(!query.exec(sql))
+        qDebug()<<"Query get patched times failed";
+    int times=0, flag=0;
+    int currentStatus;
+    while(query.next()){
+        if(query.value(0).toInt() == RUNNING)
+            if(!flag){//之前没被调度，现在处于正在运行，说明被调度
+                times++;
+                flag = 1;
+            }
+            else {}
+        else
+            flag = 0;//没被调度
+    }
+    return times;
 }
