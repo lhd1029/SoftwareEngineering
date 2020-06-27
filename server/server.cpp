@@ -83,6 +83,7 @@ void Server::set_client_state(ClientState *&clientState, int roomId, QJsonObject
     clientState->set_time(time);
     clientState->set_status(status);
     clientState->set_is_open((int)obj.value("tarAC").toBool());
+    qDebug()<<"******"<<clientState->get_is_open()<<"**********************"<<endl;
     clientState->set_payment(obj.value("payment").toDouble());
     clientState->set_cur_temp(obj.value("curTemp").toDouble());
     clientState->set_cur_speed(obj.value("curWind").toInt());
@@ -149,7 +150,7 @@ void Server::slotDealCommand(QByteArray msg,int descriptor)
                     }
                 }
             }
-            //qDebug() << receptionistSocket->socketDescriptor();
+            qDebug() << receptionistSocket->socketDescriptor();
         }
         else if(getObj.value("User").toString()=="admin"){
             qDebug() << "Connecting to admin......";
@@ -230,18 +231,6 @@ void Server::slotDealCommand(QByteArray msg,int descriptor)
                 qDebug()<<"准备处理人工请求"<<endl;
                 int tarWind = obj.value("tarWind").toInt();
                 int tarAC = (int)obj.value("tarAC").toBool();
-                if(tarAC==1){
-                    if(masterAirconditioner->roomStateMap[roomId]->occupied==0){
-                        for(auto i=masterAirconditioner->allClientQueue.begin();i!=masterAirconditioner->allClientQueue.end();i++){
-                            if(i->first==roomId){
-                                i->second->write(sendOnOffMessage(0));
-                                 i->second->flush();
-                                break;
-                            }
-                        }
-                    }
-
-                }
                 dispatch(roomId,tarWind,tarAC);
                 //写入steply数据库
                 //context.insert("operationType", type);//  isWind/isTemp/isSwitch/isMode
@@ -316,13 +305,12 @@ void Server::slotDealCommand(QByteArray msg,int descriptor)
                     QJsonObject objItem;
                     ReportOne ro = Data::getReportOne(dbTime, dbStep, roomId, date);
                     objItem.insert("roomId", roomId);
-                    objItem.insert("useACTimes", ro.ACUseTimes);
-                    objItem.insert("changeDegreeTimes", ro.ChangeTempTimes);
-                    objItem.insert("changeWindTimes", ro.ChangeWindTimes);
-                    objItem.insert("dispatchTimes", ro.ACdispatchedTimes);
-                    objItem.insert("useACTime", ro.ACUseTime);
-                    objItem.insert("detailRecordRows", ro.detailedNum);
-                    objItem.insert("fee",ro.fee);
+                    objItem.insert("useACTimes", QString::number(ro.ACUseTimes));
+                    objItem.insert("changeDegreeTimes", QString::number(ro.ChangeTempTimes));
+                    objItem.insert("changeWindTimes", QString::number(ro.ChangeWindTimes));
+                    objItem.insert("dispathTimes", QString::number(ro.ACdispatchedTimes));
+                    objItem.insert("useACTime", QString::number(ro.ACUseTime));
+                    objItem.insert("detailRecordRows", QString::number(ro.detailedNum));
 
                     tempArray.append(objItem);
                 }
@@ -350,6 +338,7 @@ void Server::slotDealCommand(QByteArray msg,int descriptor)
                 objItem.insert("checkouttime", bill.checkOutTime.toString());
                 objItem.insert("payment", bill.payment);
                 objItem.insert("bill", "");
+                qDebug() << "Finish insert bill"<<objItem<<"******************************";
 
                 QJsonDocument doc;
                 doc.setObject(objItem);
@@ -359,6 +348,7 @@ void Server::slotDealCommand(QByteArray msg,int descriptor)
             }
 
             //详单
+            //改，查receptionistsocket
             else if (getObj.value("Type").toString() == "list")
             {
                 int roomID = getObj.value("roomID").toString().toInt();
@@ -409,16 +399,9 @@ void Server::slotDealCommand(QByteArray msg,int descriptor)
                 }
                 if (i == length)
                 {
-                    roomID = 0;
+                    int roomID = 0;
                 }
-                //给客户端发送可以使用消息
-                for(auto i=masterAirconditioner->allClientQueue.begin();i!=masterAirconditioner->allClientQueue.end();i++){
-                    if(i->first==roomID){
-                        i->second->write(sendOnOffMessage(1));
-                        i->second->flush();
-                        break;
-                    }
-                }
+
                 QJsonObject obj;
                 obj.insert("checkin", "");
                 obj.insert("roomID", roomID);
@@ -429,6 +412,7 @@ void Server::slotDealCommand(QByteArray msg,int descriptor)
                 qDebug()<<jsArr;
             }
 
+
             //退房
             else if (getObj.value("Type").toString() == "checkout")
             {
@@ -437,14 +421,6 @@ void Server::slotDealCommand(QByteArray msg,int descriptor)
 
                 qDebug() << roomID;
                 masterAirconditioner->roomStateMap[roomID]->occupied = 0;
-                //给客户端发送关机消息
-                for(auto i=masterAirconditioner->allClientQueue.begin();i!=masterAirconditioner->allClientQueue.end();i++){
-                    if(i->first==roomID){
-                        i->second->write(sendOnOffMessage(0));
-                        i->second->flush();
-                        break;
-                    }
-                }
                 qDebug() << "get checkout request";
                 Data::checkOut(dbTime, dbStep, roomID,
                                QDateTime::currentDateTime().toString("yyyyMMddhhmmss"));
@@ -494,7 +470,15 @@ void Server::slotDealCommand(QByteArray msg,int descriptor)
 void Server::dispatch(int roomId,int tarWind,int tarAC)
 {
     qDebug()<<"给请求"<<"roomId="<<roomId<<",tarWind="<<tarWind<<",tarAC="<<tarAC<<"进行调度";
-    showDispatchResult();
+    qDebug()<<"调度前的情况"<<endl;
+    qDebug()<<"waiting[1]队列大小"<<masterAirconditioner->waitingQueue[1].size();
+    qDebug()<<"waiting[2]队列大小"<<masterAirconditioner->waitingQueue[2].size();
+    qDebug()<<"waiting[3]队列大小"<<masterAirconditioner->waitingQueue[3].size();
+    qDebug()<<"running[1]队列大小"<<masterAirconditioner->runningQueue[1].size();
+    qDebug()<<"running[2]队列大小"<<masterAirconditioner->runningQueue[2].size();
+    qDebug()<<"running[3]队列大小"<<masterAirconditioner->runningQueue[3].size();
+    qDebug()<<"hungry[1]队列大小"<<masterAirconditioner->hungryQueue[1].size();
+    qDebug()<<"hungry[2]队列大小"<<masterAirconditioner->hungryQueue[2].size();
     if(tarAC==1&&tarWind!=0){//如果开关打开，且目标风速不为0，表明要表达请求
         int total = masterAirconditioner->runningQueue[1].size()+masterAirconditioner->runningQueue[2].size()+masterAirconditioner->runningQueue[3].size();
         if(!masterAirconditioner->isInQueue(roomId,0)&&!masterAirconditioner->isInQueue(roomId,1)&&!masterAirconditioner->isInQueue(roomId,2)){//如果当前roomId的请求，不在就绪准备饥饿队列中
@@ -746,16 +730,7 @@ QByteArray Server::sendWindMessage(QString State,int Wind)
     QByteArray msg = doc.toJson();
     return msg;
 }
-QByteArray Server::sendOnOffMessage(int onOrOff)
-{
-    QJsonObject obj;
-    obj.insert("Header","returnOnOrOff");
-    obj.insert("OnOrOff",onOrOff);
-    QJsonDocument doc(obj);
-    QByteArray msg = doc.toJson();
-    return msg;
 
-}
 QByteArray Server::sendParamsMessage()
 {
     QJsonObject obj;
