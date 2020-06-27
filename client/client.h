@@ -21,9 +21,9 @@ public:
     explicit Client(QString roomId = "101", QString userName = "abc", double initialTemp = 30.0,  QWidget *parent = nullptr);
     ~Client();
 
-    void showCurWind(windSpeed wind);
+    void showCurWind(windSpeed wind);  // 展示风速
     void showTarWind(windSpeed wind);
-    void showState();
+    void showState();  // 展示开关机状态
     void showMode();  //  展现模式
 
 
@@ -31,6 +31,7 @@ public:
 private slots:
     void onInfoUpdated();  // 定时更新界面所有信息
     void onErrorOccoured(errorType error);  // 错误发生提示
+    void onCheckIn();  // 该房间办理入住, 可以合法使用
     void on_pushButton_temperature_up_2_clicked();  // 升温
     void on_pushButton_temperature_down_2_clicked();  // 降温
     void on_pushButton_switch_2_clicked();  // 开关按钮

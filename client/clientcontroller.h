@@ -2,11 +2,11 @@
 #define CLIENTCONTROLLER_H
 
 
-#define RATIO_LOW_WIND 0.8
-#define RATIO_HIGH_WIND 1.2
-#define DELTA_TEMP_AC_ON 0.5
-#define DELTA_TEMP_AC_OFF 0.5
-
+#define RATIO_LOW_WIND 0.8  // 低风温度变化速率
+#define RATIO_HIGH_WIND 1.2  // 高风温度变化速率
+#define DELTA_TEMP_AC_ON 0.5  // 空调开启温度变化值
+#define DELTA_TEMP_AC_OFF 0.5  // 空调关闭温度变化值
+#define TIME_SLIDE 6000  // 更新温度费用时间
 
 #include <QObject>
 #include <QMessageBox>
@@ -21,7 +21,8 @@
 
 enum isOperation{none, automatic, manual};
 enum operationType{no, isWind, isTemp, isSwitch, isMode};
-enum errorType {tempNotAllowed,tcpFailed};  // 错误类型
+enum errorType {tempNotAllowed, tcpFailed, roomInvalid};  // 错误类型
+
 class ClientController : public QObject
 {
     Q_OBJECT
@@ -43,11 +44,10 @@ signals:
     void SignalInfoUpdated();  // 中央空调返回风速更新
     void SignalTimeOutUpdated();  // 定时状态更新
     void SignalErrorOccoured(errorType error);  // 出现错误
-
+    void SignalCheckIn();
 private slots:
     void timerEvent(QTimerEvent *event) Q_DECL_OVERRIDE;
-//    void onTimerOut();  // 定时器到时,计算当前温度并更新
-    void slotDealReturn(QByteArray msg);  // 处理服务器返回信息,待补充
+    void slotDealReturn(QByteArray msg);  // 处理服务器返回信息
 private:
     int minuteTimer;  // 一分钟计时器
     int secondTimer;  // 一秒钟定时器

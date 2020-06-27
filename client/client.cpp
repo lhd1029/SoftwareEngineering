@@ -16,8 +16,7 @@ Client::Client(QString roomId, QString userName, double initialTemp, QWidget *pa
     connect(cc, SIGNAL(SignalTimeOutUpdated()), this, SLOT(onInfoUpdated()));
     // 展示控制器返回的错误,例如温度设置错误、通信丢失
     connect(cc, SIGNAL(SignalErrorOccoured(errorType)), this, SLOT(onErrorOccoured(errorType)));
-
-
+    connect(cc, SIGNAL(SignalCheckIn()), this, SLOT(onCheckIn()));
     ui->label_customer_name_3->setText(userName);
     ui->label_roomID->setText(roomId);
     ui->lcdNumber_current_temperature_2->display(sm->getCurTemp());
@@ -30,11 +29,6 @@ Client::Client(QString roomId, QString userName, double initialTemp, QWidget *pa
     qDebug()<<"client构造函数"<<endl;
 }
 
-//Client::Client(const Client &a){
-//       this->ui = a.ui;
-//       this->cc = a.cc;
-//       this->sm = a.sm;
-//   }
 Client::~Client()
 {
     qDebug()<<"client析构函数"<<endl;
@@ -58,6 +52,21 @@ void Client::onErrorOccoured(errorType error)
         QMessageBox::critical(this, "错误信息", "温度设置超出当前模式范围");
     else if (error == tcpFailed)
         QMessageBox::critical(this, "提示信息", "与中央空调通信失败,请联系管理员");
+    else if (error == roomInvalid) {
+        if (sm->getState() == true) {  // 如果房间开启, 立即关闭空调
+            on_pushButton_switch_2_clicked();
+        }
+        sm->setIsValid(false);
+        ui->pushButton_switch_2->setDisabled(true);
+        QMessageBox::critical(this, "提示信息", "对不起, 你没有对此房间操作权限");
+
+    }
+}
+
+void Client::onCheckIn()
+{
+    sm->setIsValid(true);
+    ui->pushButton_switch_2->setEnabled(true);
 }
 
 void Client::showCurWind(windSpeed wind)

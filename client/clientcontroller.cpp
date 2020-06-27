@@ -6,6 +6,7 @@ ClientController::ClientController(SlaveMachine *sm, QObject *parent) : QObject(
     this->sm = sm;
     qDebug()<<sm<<endl;
     waitFlag = false;
+    sm->setIsValid(true);
     // 以下需询问管理员设置
     sm->setTarTemp(sm->getDefaultTemp());
     sm->setPayment(0.0);
@@ -14,7 +15,7 @@ ClientController::ClientController(SlaveMachine *sm, QObject *parent) : QObject(
     tcpClient = new TcpClient();  // 负责与服务器通信
     sendClientInfo();  //初始化接口
 
-    minuteTimer = startTimer(4000);  // 分钟定时器
+    minuteTimer = startTimer(TIME_SLIDE);  // 分钟定时器
 
     connect(tcpClient, SIGNAL(sigDataReturn(QByteArray)),
             this, SLOT(slotDealReturn(QByteArray)));  // 用于让controller处理tcpClient收到的消息
@@ -185,6 +186,15 @@ void ClientController::slotDealReturn(QByteArray msg)//处理服务器返回消�
             emit SignalInfoUpdated();
         }
     }
+    else if (header == "returnOnOrOff") {  // 前台退房强制关闭空调
+        if (getObj.value("OnOrOff").toInt() == 0) {
+            emit SignalErrorOccoured(roomInvalid);
+        }
+        else if (getObj.value("OnOrOff").toInt() == 1) {
+            emit SignalCheckIn();
+
+        }
+    }
 }
 
 
@@ -206,6 +216,9 @@ void ClientController::sendClientInfo()
 //none/automatic/manual
 void ClientController::sendMaster(isOperation who, operationType type)
 {
+    if (sm->getIsValid() == false) {  // 不发消息
+        return ;
+    }
     QJsonObject obj;
     obj.insert("Header","request");
     obj.insert("User","client");

@@ -1,19 +1,19 @@
 #ifndef SLAVEMACHINE_H
 #define SLAVEMACHINE_H
 #include <QMainWindow>
-enum windSpeed {noWind,lowWind,midWind,highWind};  // 风速类型
-enum ACmode {cold,heat};  // 运行模式
+enum windSpeed {noWind, lowWind, midWind, highWind};  // 风速类型
+enum ACmode {cold, heat};  // 运行模式
 
 class SlaveMachine
 {
 public:
     SlaveMachine(QString roomId = "111", QString userName = "liu", double initialTemp = 30.0);
     //get()
+    bool getIsValid() {return isValid;}
     QString getRoomId() {return roomId;}
     QString getUserName() {return userName;}
     windSpeed getCurWind() {return curWind;}
     windSpeed getTarWind() {return tarWind;}
-//    windSpeed getPreWind() {return preWind;}
     windSpeed getDefaultWind() {return defaultWind;}
     double getInitialTemp() {return initialTemp;}
     double getDefaultTemp() {return defaultTemp;}
@@ -27,11 +27,11 @@ public:
     double getPayment() {return payment;}
     ACmode getMode() {return mode;}
     //set()
+    void setIsValid(bool flag) {isValid = flag;}
     void setRoomId(QString roomId) {this->roomId = roomId;}
     void setUserName(QString name) {this->userName = name;}
     void setCurWind(windSpeed curWind) {this->curWind = curWind;}
     void setTarWind(windSpeed tarWind) {this->tarWind = tarWind;}
-//    void setPreWind(windSpeed preWind) {this->preWind = preWind;}
     void setDefaultWind(windSpeed wind) {defaultWind = wind;}
     void setInitialTemp(double initialTemp) {this->initialTemp = initialTemp;}
     void setDefaultTemp(double defaultTemp) {this->defaultTemp = defaultTemp;}
@@ -45,11 +45,11 @@ public:
     void setPayment(double payment) {this->payment = payment;}
     void setMode(ACmode mode) {this->mode = mode;}
 private:
+    bool isValid;  // 房间是否可操作
     QString roomId;  // 房间号
     QString userName;  // 客户名
     windSpeed curWind;  // 当前风速
     windSpeed tarWind;  // 目标风速
-
     windSpeed defaultWind;  // 缺省风速
     double initialTemp;  // 最初温度
     double defaultTemp;  // 默认缺省温度
