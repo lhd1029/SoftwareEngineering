@@ -106,18 +106,22 @@ double DatabaseTimelyReport::get_payment(int roomID)//获取空调应付金额
         where roomID = '" + QString::number(roomID) + "' and time = \
         (select max(time) from airconditioner_timely_report\
         where roomID = '" + QString::number(roomID) + "')";
-//    qDebug()<<"sqlget_payment"<<sql<<endl;
     QSqlQuery query;
     query.clear();
     bool result1 = query.exec(sql);
-    query.next();
-    if (result1)
+    if(query.next())
     {
-        return query.value(0).toDouble();
+        if (result1)
+        {
+            return query.value(0).toDouble();
+        }
+        else
+        {
+            return result1;
+        }
     }
-    else
-    {
-        return result1;
+    else {
+        return 0;
     }
 }
 
@@ -188,8 +192,10 @@ bool DatabaseTimelyReport::getList(int roomID, List* ret)
         QDateTime lastTime = QDateTime::fromString(query.value(0).toString(), "yyyyMMddhhmmss");
         if (lastWind != 0)
         {
-            startFee = query.value(3).toDouble();
+//            startFee = query.value(3).toDouble();
             ret->startTime.push_back(lastTime);
+            ret->windSpeed.push_back(lastWind);
+            ret->rate.push_back(query.value(2).toInt());
         }
         int currentWind = lastWind;
         QDateTime currentTime = lastTime;

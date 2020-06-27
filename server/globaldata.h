@@ -45,6 +45,7 @@ typedef struct{
     int ACdispatchedTimes;
     double ACUseTime;
     int detailedNum;
+    double fee;
 }ReportOne;
 
 typedef struct{

@@ -186,10 +186,20 @@ QDateTime DatabaseSteplyReport::getCheckOutTime(int roomID)
     return ret;
 }
 
+//空调使用次数
 int DatabaseSteplyReport::getACUseTimes(int roomID, QString date)
 {
-    QString sql = "select count(*) from airconditioner_timely_report where roomID = '" + QString::number(roomID)
-            + "' and time like " + "'" + date + "%' "+ " and target_temp = 0";
+//    QString sql0 = "select count(*) from airconditioner_steply_report where roomID = '" + QString::number(roomID)
+//            + "' and time like " + "'" + date + "%' "+ " and target_temp > 0";
+//    QSqlQuery query;
+//    query.clear();
+//    query.exec(sql0);
+//    int times = 0;
+//    if(query.next() != NULL && query.value(0) != 0)
+//        times = 1;
+
+    QString sql = "select count(*) from airconditioner_steply_report where roomID = '" + QString::number(roomID)
+            + "' and time like " + "'" + date + "%' "+ " and target_temp = -1";
     QSqlQuery query;
     query.clear();
     if(query.exec(sql) && query.next() != NULL)
@@ -204,8 +214,8 @@ int DatabaseSteplyReport::getACUseTimes(int roomID, QString date)
 //空调调温度次数
 int DatabaseSteplyReport::getChangeTempTimes(int roomID, QString date)
 {
-    QString sql = "select count(*) from (select target_temp from airconditioner_timely_report where roomID = '" + QString::number(roomID)
-            + "' and time like " + "'" + date + "%' ) as targetTemp";
+    QString sql = "select count(*) from (select target_temp from airconditioner_steply_report where roomID = '" + QString::number(roomID)
+            + "' and time like " + "'" + date + "%' and target_temp > 0) as targetTemp";
     QSqlQuery query;
     if(!query.exec(sql)){
         qDebug()<<"Query change degree times failed";
@@ -220,8 +230,8 @@ int DatabaseSteplyReport::getChangeTempTimes(int roomID, QString date)
 //空调调风次数
 int DatabaseSteplyReport::getChangeWindTimes(int roomID, QString date)
 {
-    QString sql = "select count(*) from ( select target_speed from airconditioner_timely_report where roomID = '"
-            + QString::number(roomID) + "' and time like " + "'" + date + "%') as targetWind";
+    QString sql = "select count(*) from ( select target_speed from airconditioner_steply_report where roomID = '"
+            + QString::number(roomID) + "' and time like " + "'" + date + "%' and target_speed > 0) as targetWind";
     QSqlQuery query;
     if(!query.exec(sql)){
         qDebug()<<"Query change wind times failed";

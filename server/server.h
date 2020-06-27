@@ -1,7 +1,7 @@
 ﻿#ifndef SERVER_H
 #define SERVER_H
-#define TIME_SLOT 30000  // 时间片调度时间
-#define TIME_HUNGRY 60000  // 饥饿时间
+#define TIME_SLOT 120000  // 时间片调度时间
+#define TIME_HUNGRY 240000  // 饥饿时间
 #include <QObject>
 #include <QDateTime>
 #include <QTcpServer>
@@ -29,6 +29,7 @@ public:
     void dispatch(int roomId,int tarWind,int tarAC);
     QByteArray sendWindMessage(QString State,int Wind);//发送风速的信息
     QByteArray sendParamsMessage();//发送参数信息
+    QByteArray sendOnOffMessage(int onOrOff);//发送开关信息，0为开（可以开），1为关
     void showDispatchResult();
     void myStartTimer(int roomId);
     void myStopTimer(int roomId);
